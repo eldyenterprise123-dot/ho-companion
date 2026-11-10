@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173c32">
+<title>HO Companion | On-Call Hub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root {
+  --green:#173c32;
+  --green2:#254b40;
+  --gold:#c9a66b;
+  --cream:#f6f6f0;
+  --white:#ffffff;
+  --text:#26352e;
+  --muted:#839087;
+  --border:#e7eae4;
+  --red:#c94c4c;
+  --orange:#c58b3d;
+  --blue:#527caa;
+  --shadow:0 5px 20px rgba(20,50,40,.06);
+}
+* {box-sizing:border-box;margin:0;padding:0}
+body {
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+}
+button,input,select,textarea {font:inherit}
+button {cursor:pointer}
+.topbar {
+  background:var(--green);
+  color:white;
+  padding:18px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+.brand {display:flex;align-items:center;gap:12px}
+.brand-icon {
+  background:var(--gold);
+  color:var(--green);
+  width:42px;height:42px;
+  border-radius:12px;
+  display:grid;place-items:center;
+  font-size:21px;font-weight:800;
+}
+.brand h1 {font-size:19px;letter-spacing:.5px}
+.brand p {font-size:11px;color:#c5d6ce;margin-top:3px}
+.top-right {display:flex;align-items:center;gap:12px}
+.user-label {font-size:12px;color:#d3dfd8}
+.btn {
+  border:0;border-radius:9px;
+  padding:11px 16px;font-weight:600;
+  transition:.2s;
+}
+.btn-primary {background:var(--green);color:white}
+.btn-primary:hover {background:var(--green2)}
+.btn-gold {background:var(--gold);color:var(--green)}
+.btn-outline {
+  background:white;border:1px solid var(--border);
+  color:var(--text);
+}
+.btn-small {padding:7px 10px;font-size:12px}
+.btn-danger {background:#fff0ed;color:#bd4848}
+.container {max-width:1100px;margin:32px auto;padding:0 20px}
+.welcome {
+  display:flex;justify-content:space-between;
+  align-items:center;gap:15px;margin-bottom:24px;
+}
+.welcome h2 {font-size:25px;color:var(--green)}
+.welcome p {font-size:13px;color:var(--muted);margin-top:5px}
+.stats {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:15px;margin-bottom:25px;
+}
+.stat {
+  background:white;padding:20px;border-radius:14px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+.stat small {color:var(--muted);font-size:12px}
+.stat h3 {font-size:28px;color:var(--green);margin-top:8px}
+.stat-icon {font-size:20px}
+.layout {
+  display:grid;grid-template-columns:220px 1fr;
+  gap:20px;align-items:start;
+}
+.sidebar {
+  background:white;border:1px solid var(--border);
+  border-radius:15px;padding:12px;
+  position:sticky;top:15px;
+}
+.nav-btn {
+  width:100%;display:flex;align-items:center;
+  gap:12px;padding:14px 12px;
+  border:0;background:white;color:#647269;
+  border-radius:9px;text-align:left;
+  font-weight:600;font-size:13px;margin-bottom:5px;
+}
+.nav-btn.active {background:var(--green);color:white}
+.nav-btn span {font-size:18px}
+.main {
+  background:white;border:1px solid var(--border);
+  border-radius:15px;padding:23px;
+  min-width:0;
+}
+.main-header {
+  display:flex;justify-content:space-between;
+  align-items:center;gap:12px;margin-bottom:20px;
+}
+.main-header h2 {font-size:19px;color:var(--green)}
+.main-header p {font-size:12px;color:var(--muted);margin-top:5px}
+.toolbar {
+  display:flex;justify-content:space-between;
+  align-items:center;gap:12px;
+  flex-wrap:wrap;margin-bottom:18px;
+}
+.filters {display:flex;gap:7px;flex-wrap:wrap}
+.filter {
+  padding:8px 13px;border-radius:30px;
+  border:1px solid var(--border);background:white;
+  color:#718077;font-size:11px;font-weight:600;
+}
+.filter.active {background:var(--green);color:white;border-color:var(--green)}
+.job-list {display:flex;flex-direction:column;gap:12px}
+.job {
+  border:1px solid var(--border);
+  border-radius:12px;padding:16px;
+  display:flex;justify-content:space-between;
+  align-items:center;gap:12px;
+}
+.job:hover {border-color:#bdcfc4}
+.job h3 {font-size:14px;color:var(--text);margin:9px 0}
+.job-meta {font-size:11px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
+.job-actions {display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.badge {
+  display:inline-block;padding:5px 9px;
+  border-radius:20px;font-size:10px;font-weight:700;
+}
+.urgent {background:#ffeded;color:#c74d4d}
+.routine {background:#f0f1ed;color:#718077}
+.pending {background:#fff4df;color:#aa792a}
+.progress {background:#eaf1fb;color:#4e77a5}
+.completed {background:#e5f5eb;color:#328254}
+.handed {background:#eeeafa;color:#7761a9}
+.ack {background:#e5f5eb;color:#328254}
+.empty {
+  text-align:center;padding:45px 15px;
+  color:var(--muted);
+}
+.empty div {font-size:35px;margin-bottom:12px}
+.empty p {font-size:12px;margin-top:6px}
+.form-panel {
+  display:none;background:#f9faf7;
+  border:1px solid var(--border);
+  border-radius:12px;padding:20px;margin-bottom:20px;
+}
+.form-panel.show {display:block}
+.form-panel h3 {margin-bottom:16px;color:var(--green);font-size:16px}
+.form-grid {display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field {display:flex;flex-direction:column;gap:7px}
+.field.full {grid-column:1/-1}
+.field label {font-size:11px;font-weight:700;color:#647269}
+.field input,.field select,.field textarea {
+  border:1px solid var(--border);
+  padding:12px;border-radius:8px;
+  background:white;outline:none;width:100%;
+  font-size:13px;color:var(--text);
+}
+.field input:focus,.field select:focus,.field textarea:focus {
+  border-color:var(--green);
+}
+.form-actions {display:flex;gap:8px;margin-top:16px}
+.notice {
+  padding:12px;border-radius:8px;
+  margin-bottom:15px;font-size:12px;display:none;
+}
+.notice.show {display:block}
+.notice.error {background:#fff0ed;color:#b94d4d}
+.notice.success {background:#e7f5eb;color:#28774a}
+.handover-header {
+  padding:17px;background:#f2f5ef;
+  border-radius:11px;margin-bottom:18px;
+}
+.handover-header h3 {color:var(--green);font-size:16px}
+.handover-header p {font-size:11px;color:var(--muted);margin-top:5px}
+.auth-wrap {
+  max-width:410px;margin:70px auto;padding:20px;
+}
+.auth-card {
+  background:white;padding:30px;border-radius:18px;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+}
+.auth-card h2 {color:var(--green);margin-bottom:7px}
+.auth-card p {font-size:12px;color:var(--muted);margin-bottom:20px}
+.auth-card .field {margin-bottom:14px}
+.auth-card .btn {width:100%;margin-top:8px}
+.auth-switch {text-align:center;font-size:12px;margin-top:18px}
+.auth-switch a {color:var(--green);font-weight:700;cursor:pointer}
+.footer {
+  text-align:center;color:var(--muted);
+  font-size:10px;padding:30px 10px;
+}
+.hidden {display:none!important}
+.mobile-nav {display:none}
+
+@media(max-width:700px) {
+  .topbar {padding:14px 17px}
+  .brand h1 {font-size:16px}
+  .user-label {display:none}
+  .container {padding:0 13px;margin:22px auto}
+  .welcome h2 {font-size:21px}
+  .stats {gap:8px}
+  .stat {padding:13px}
+  .stat h3 {font-size:23px}
+  .stat small {font-size:10px}
+  .layout {display:block}
+  .sidebar {display:none}
+  .main {padding:16px 12px;margin-bottom:80px}
+  .job {align-items:flex-start;flex-direction:column}
+  .job-actions {width:100%}
+  .job-actions button {flex:1}
+  .form-grid {grid-template-columns:1fr}
+  .field.full {grid-column:auto}
+  .mobile-nav {
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    background:white;border-top:1px solid var(--border);
+    justify-content:space-around;padding:10px 3px;
+    z-index:10;
+  }
+  .mobile-nav button {
+    border:0;background:white;color:#718077;
+    display:flex;flex-direction:column;align-items:center;
+    gap:4px;font-size:10px;padding:5px;
+  }
+  .mobile-nav button.active {color:var(--green);font-weight:800}
+  .mobile-nav span {font-size:19px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">H</div>
+    <div>
+      <h1>HO COMPANION</h1>
+      <p>YOUR ON-CALL WORKSPACE</p>
+    </div>
+  </div>
+  <div class="top-right">
+    <span class="user-label" id="userLabel">Welcome, Doctor</span>
+    <button class="btn btn-gold btn-small hidden" id="logoutBtn" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<div id="authScreen" class="auth-wrap">
+  <div class="auth-card">
+    <h2 id="authTitle">Welcome Doctor</h2>
+    <p id="authDesc">Sign in to access your HO Companion workspace.</p>
+    <div id="authNotice" class="notice"></div>
+    <div class="field">
+      <label>Email address</label>
+      <input type="email" id="email" placeholder="doctor@email.com">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Minimum 6 characters">
+    </div>
+    <div class="field hidden" id="teamField">
+      <label>Team code</label>
+      <input id="teamCode" placeholder="e.g. MEDICAL-ONCALL">
+    </div>
+    <button class="btn btn-primary" id="authButton" onclick="authenticate()">Sign In</button>
+    <div class="auth-switch">
+      <span id="switchText">New user?</span>
+      <a onclick="toggleAuth()" id="switchLink">Create account</a>
+    </div>
+  </div>
+</div>
+
+<div id="appScreen" class="hidden">
+<main class="container">
+
+  <section class="welcome">
+    <div>
+      <h2>Good day, Doctor.</h2>
+      <p>Manage your on-call tasks efficiently.</p>
+    </div>
+    <button class="btn btn-primary" onclick="openForm()">+ Add Job</button>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <small>📋 Total Jobs</small>
+      <h3 id="totalCount">0</h3>
+    </div>
+    <div class="stat">
+      <small>⏳ Pending</small>
+      <h3 id="pendingCount">0</h3>
+    </div>
+    <div class="stat">
+      <small>📤 Passover</small>
+      <h3 id="passCount">0</h3>
+    </div>
+  </section>
+
+  <section class="layout">
+    <aside class="sidebar">
+      <button class="nav-btn active" data-tab="personal" onclick="switchTab('personal')">
+        <span>👤</span> Personal Jobs
+      </button>
+      <button class="nav-btn" data-tab="shared" onclick="switchTab('shared')">
+        <span>👥</span> Shared Team
+      </button>
+      <button class="nav-btn" data-tab="passover" onclick="switchTab('passover')">
+        <span>📋</span> Passover Board
+      </button>
+    </aside>
+
+    <section class="main">
+      <div class="main-header">
+        <div>
+          <h2 id="pageTitle">Personal Job List</h2>
+          <p id="pageDesc">Manage your individual tasks.</p>
+        </div>
+      </div>
+
+      <div id="notice" class="notice"></div>
+
+      <div class="form-panel" id="jobForm">
+        <h3>Add New Job</h3>
+        <div class="form-grid">
+          <div class="field full">
+            <label>Task description *</label>
+            <textarea id="task" rows="2" placeholder="e.g. Review FBC and inform MO"></textarea>
+          </div>
+          <div class="field">
+            <label>Ward</label>
+            <input id="ward" placeholder="Ward 5">
+          </div>
+          <div class="field">
+            <label>Patient reference</label>
+            <input id="patientRef" placeholder="Non-identifying code only">
+          </div>
+          <div class="field">
+            <label>Priority</label>
+            <select id="priority">
+              <option>Routine</option>
+              <option>Urgent</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Due time</label>
+            <input type="time" id="dueTime">
+          </div>
+          <div class="field">
+            <label>Job category</label>
+            <select id="scope">
+              <option value="personal">Personal Job</option>
+              <option value="shared">Shared Team Job</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" onclick="saveJob()">Save Job</button>
+          <button class="btn btn-outline" onclick="closeForm()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="toolbar" id="filterToolbar">
+        <div class="filters">
+          <button class="filter active" onclick="setFilter('All',this)">All</button>
+          <button class="filter" onclick="setFilter('Pending',this)">Pending</button>
+          <button class="filter" onclick="setFilter('In Progress',this)">In Progress</button>
+          <button class="filter" onclick="setFilter('Completed',this)">Completed</button>
+        </div>
+      </div>
+
+      <div id="passoverIntro" class="handover-header hidden">
+        <h3>📤 Next Shift Passover</h3>
+        <p>Review outstanding jobs and confirm receipt with the incoming team.</p>
+      </div>
+
+      <div id="jobList" class="job-list"></div>
+    </section>
+  </section>
+
+  <div class="footer">
+    HO COMPANION · MEDICAL WORKSPACE<br>
+    For clinical workflow support. Not a substitute for clinical judgement.
+  </div>
+
+</main>
+
+<nav class="mobile-nav">
+  <button class="active" data-tab="personal" onclick="switchTab('personal')">
+    <span>👤</span>Personal
+  </button>
+  <button data-tab="shared" onclick="switchTab('shared')">
+    <span>👥</span>Shared
+  </button>
+  <button data-tab="passover" onclick="switchTab('passover')">
+    <span>📋</span>Passover
+  </button>
+</nav>
+</div>
+
+<script>
+// =====================================
+// 1. SUPABASE CONFIGURATION
+// =====================================
+
+const SUPABASE_URL = "https://eazmwbuswkityjdfwgsq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_wfvccHh9doCtdvplj0J77g_cwPnBXOp";
+
+let db = null;
+let currentUser = null;
+let currentTeam = "";
+let currentTab = "personal";
+let currentFilter = "All";
+let jobs = [];
+let realtimeChannel = null;
+let signupMode = false;
+
+// =====================================
+// 2. INITIALIZATION
+// =====================================
+
+const configured =
+  SUPABASE_URL.startsWith("https://") &&
+  SUPABASE_KEY.startsWith("sb_publishable_");
+
+if(configured) {
+  db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  db.auth.onAuthStateChange((event,session)=>{
+    if(session?.user) {
+      currentUser=session.user;
+      setTimeout(()=>loadProfile(),0);
+    } else {
+      showAuth();
+    }
+  });
+}
+
+// =====================================
+// 3. AUTHENTICATION
+// =====================================
+
+function toggleAuth(){
+  signupMode=!signupMode;
+  document.getElementById("authTitle").textContent=
+    signupMode?"Create Doctor Account":"Welcome Doctor";
+  document.getElementById("authDesc").textContent=
+    signupMode?"Register your account and team code.":"Sign in to your workspace.";
+  document.getElementById("authButton").textContent=
+    signupMode?"Create Account":"Sign In";
+  document.getElementById("teamField").classList.toggle("hidden",!signupMode);
+  document.getElementById("switchText").textContent=
+    signupMode?"Already registered?":"New user?";
+  document.getElementById("switchLink").textContent=
+    signupMode?"Sign in":"Create account";
+}
+
+async function authenticate(){
+  if(!db) return alert("Please configure your Supabase URL and Publishable Key first.");
+
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  const team=document.getElementById("teamCode").value.trim().toUpperCase();
+
+  if(!email||!password) return authMessage("Enter email and password.","error");
+  if(password.length<6) return authMessage("Password must contain at least 6 characters.","error");
+  if(signupMode&&!team) return authMessage("Enter your team code.","error");
+
+  let result;
+
+  if(signupMode){
+    result=await db.auth.signUp({email,password});
+
+    if(result.error) return authMessage(result.error.message,"error");
+
+    if(result.data.user && result.data.session){
+      const {error}=await db.from("ho_profiles").upsert({
+        id:result.data.user.id,
+        team_code:team
+      });
+
+      if(error) return authMessage(error.message,"error");
+
+      currentUser=result.data.user;
+      await loadProfile();
+    } else {
+      authMessage("Account created. Check your email to confirm your account, then sign in. Your team profile may need to be created after confirmation.","success");
+    }
+
+  } else {
+    result=await db.auth.signInWithPassword({email,password});
+    if(result.error) return authMessage(result.error.message,"error");
+    currentUser=result.data.user;
+    await loadProfile();
+  }
+}
+
+function authMessage(message,type){
+  const el=document.getElementById("authNotice");
+  el.textContent=message;
+  el.className="notice show "+type;
+}
+
+function showAuth(){
+  document.getElementById("authScreen").classList.remove("hidden");
+  document.getElementById("appScreen").classList.add("hidden");
+  document.getElementById("logoutBtn").classList.add("hidden");
+  currentUser=null;
+}
+
+function showApp(){
+  document.getElementById("authScreen").classList.add("hidden");
+  document.getElementById("appScreen").classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.remove("hidden");
+  document.getElementById("userLabel").textContent=currentUser.email;
+}
+
+async function logout(){
+  if(realtimeChannel) await db.removeChannel(realtimeChannel);
+  await db.auth.signOut();
+  jobs=[];
+  showAuth();
+}
+
+// =====================================
+// 4. PROFILE AND TEAM
+// =====================================
+
+async function loadProfile(){
+  if(!currentUser) return;
+
+  const {data,error}=await db
+    .from("ho_profiles")
+    .select("team_code")
+    .eq("id",currentUser.id)
+    .maybeSingle();
+
+  if(error){
+    authMessage("Unable to load profile: "+error.message,"error");
+    return;
+  }
+
+  if(!data){
+    authMessage("No team profile found. Please contact your team administrator to complete your profile setup.","error");
+    return;
+  }
+
+  currentTeam=data.team_code;
+  showApp();
+  await loadJobs();
+  subscribeRealtime();
+}
+
+// =====================================
+// 5. LOAD JOBS
+// =====================================
+
+async function loadJobs(){
+  if(!currentUser) return;
+
+  const {data,error}=await db
+    .from("ho_jobs")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  if(error){
+    showNotice(error.message,"error");
+    return;
+  }
+
+  jobs=data||[];
+  render();
+}
+
+function subscribeRealtime(){
+  if(realtimeChannel) db.removeChannel(realtimeChannel);
+
+  realtimeChannel=db
+    .channel("ho-jobs-live")
+    .on(
+      "postgres_changes",
+      {event:"*",schema:"public",table:"ho_jobs"},
+      ()=>loadJobs()
+    )
+    .subscribe();
+}
+
+// =====================================
+// 6. CREATE JOB
+// =====================================
+
+function openForm(){
+  document.getElementById("jobForm").classList.add("show");
+}
+
+function closeForm(){
+  document.getElementById("jobForm").classList.remove("show");
+}
+
+async function saveJob(){
+  const task=document.getElementById("task").value.trim();
+
+  if(!task) return showNotice("Please enter a task.","error");
+
+  const payload={
+    user_id:currentUser.id,
+    team_code:currentTeam,
+    scope:document.getElementById("scope").value,
+    task,
+    ward:document.getElementById("ward").value.trim(),
+    patient_ref:document.getElementById("patientRef").value.trim(),
+    priority:document.getElementById("priority").value,
+    status:"Pending",
+    due_time:document.getElementById("dueTime").value || null,
+    handover:false,
+    acknowledged:false
+  };
+
+  const {error}=await db.from("ho_jobs").insert(payload);
+
+  if(error) return showNotice(error.message,"error");
+
+  document.getElementById("task").value="";
+  document.getElementById("ward").value="";
+  document.getElementById("patientRef").value="";
+  document.getElementById("dueTime").value="";
+
+  closeForm();
+  showNotice("Job successfully added.","success");
+  await loadJobs();
+}
+
+// =====================================
+// 7. UPDATE JOB STATUS
+// =====================================
+
+async function updateStatus(id,status){
+  const {error}=await db.from("ho_jobs")
+    .update({status})
+    .eq("id",id);
+
+  if(error) return showNotice(error.message,"error");
+  await loadJobs();
+}
+
+// =====================================
+// 8. PASSOVER
+// =====================================
+
+async function passoverJob(id){
+  if(!confirm("Move this outstanding job to Passover Board?")) return;
+
+  const {error}=await db.from("ho_jobs")
+    .update({handover:true,acknowledged:false})
+    .eq("id",id);
+
+  if(error) return showNotice(error.message,"error");
+
+  showNotice("Job moved to Passover Board.","success");
+  await loadJobs();
+}
+
+async function acknowledgeJob(id){
+  const {error}=await db.from("ho_jobs")
+    .update({acknowledged:true})
+    .eq("id",id);
+
+  if(error) return showNotice(error.message,"error");
+
+  showNotice("Passover acknowledged.","success");
+  await loadJobs();
+}
+
+async function removePassover(id){
+  if(!confirm("Remove this job from Passover Board?")) return;
+
+  const {error}=await db.from("ho_jobs")
+    .update({handover:false,acknowledged:false})
+    .eq("id",id);
+
+  if(error) return showNotice(error.message,"error");
+  await loadJobs();
+}
+
+// =====================================
+// 9. NAVIGATION AND FILTERS
+// =====================================
+
+function switchTab(tab){
+  currentTab=tab;
+  currentFilter="All";
+
+  document.querySelectorAll("[data-tab]").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.tab===tab);
+  });
+
+  const titles={
+    personal:["Personal Job List","Manage your individual tasks."],
+    shared:["Shared Team Job List","Jobs visible to your on-call team."],
+    passover:["Passover Board","Outstanding tasks for the next shift."]
+  };
+
+  document.getElementById("pageTitle").textContent=titles[tab][0];
+  document.getElementById("pageDesc").textContent=titles[tab][1];
+
+  document.getElementById("filterToolbar").classList.toggle("hidden",tab==="passover");
+  document.getElementById("passoverIntro").classList.toggle("hidden",tab!=="passover");
+
+  document.querySelectorAll(".filter").forEach(b=>{
+    b.classList.toggle("active",b.textContent.trim()==="All");
+  });
+
+  closeForm();
+  render();
+}
+
+function setFilter(filter,button){
+  currentFilter=filter;
+  document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  render();
+}
+
+// =====================================
+// 10. RENDER JOBS
+// =====================================
+
+function render(){
+  if(!currentUser) return;
+
+  const personal=jobs.filter(j=>j.user_id===currentUser.id);
+  const shared=jobs.filter(j=>j.scope==="shared"&&j.team_code===currentTeam);
+  const pass=jobs.filter(j=>j.handover);
+
+  document.getElementById("totalCount").textContent=jobs.filter(j=>!j.handover).length;
+  document.getElementById("pendingCount").textContent=jobs.filter(j=>j.status==="Pending"&&!j.handover).length;
+  document.getElementById("passCount").textContent=pass.length;
+
+  let list=[];
+
+  if(currentTab==="personal"){
+    list=personal.filter(j=>j.scope==="personal"&&!j.handover);
+  } else if(currentTab==="shared"){
+    list=shared.filter(j=>!j.handover);
+  } else {
+    list=pass;
+  }
+
+  if(currentTab!=="passover"&&currentFilter!=="All"){
+    list=list.filter(j=>j.status===currentFilter);
+  }
+
+  const container=document.getElementById("jobList");
+
+  if(!list.length){
+    container.innerHTML=`
+      <div class="empty">
+        <div>📋</div>
+        <strong>No jobs available</strong>
+        <p>Your task list is currently empty.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML=list.map(j=>{
+    const priority=j.priority==="Urgent"?"urgent":"routine";
+    const statusClass=j.status==="Completed"?"completed":
+      j.status==="In Progress"?"progress":"pending";
+
+    const time=j.due_time||"Not specified";
+
+    return `
+      <article class="job">
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;gap:7px;flex-wrap:wrap">
+            <span class="badge ${priority}">${escapeHTML(j.priority)}</span>
+            <span class="badge ${statusClass}">${escapeHTML(j.status)}</span>
+            ${j.handover?'<span class="badge handed">Passover</span>':''}
+            ${j.acknowledged?'<span class="badge ack">Acknowledged</span>':''}
+          </div>
+
+          <h3>${escapeHTML(j.task)}</h3>
+
+          <div class="job-meta">
+            <span>📍 ${escapeHTML(j.ward||"No ward")}</span>
+            <span>👤 ${escapeHTML(j.patient_ref||"No reference")}</span>
+            <span>🕒 ${escapeHTML(time)}</span>
+          </div>
+          <div style="font-size:10px;color:#839087;margin-top:8px">
+            ${j.scope==="shared"?"Shared Team Job":"Personal Job"}
+          </div>
+        </div>
+
+        <div class="job-actions">
+          ${currentTab==="passover"?
+            `<button class="btn btn-primary btn-small"
+             onclick="acknowledgeJob('${j.id}')"
+             ${j.acknowledged?'disabled':''}>
+             ${j.acknowledged?'Received':'Acknowledge'}
+             </button>
+             <button class="btn btn-outline btn-small"
+             onclick="removePassover('${j.id}')">Remove</button>`
+          :
+            `<select class="btn btn-outline btn-small"
+              aria-label="Update status"
+              onchange="updateStatus('${j.id}',this.value)">
+              <option ${j.status==="Pending"?"selected":""}>Pending</option>
+              <option ${j.status==="In Progress"?"selected":""}>In Progress</option>
+              <option ${j.status==="Completed"?"selected":""}>Completed</option>
+             </select>
+             ${j.status!=="Completed"?
+             `<button class="btn btn-primary btn-small"
+             onclick="passoverJob('${j.id}')">Passover →</button>`:""}`
+          }
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+// =====================================
+// 11. UTILITIES
+// =====================================
+
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",
+    '"':"&quot;","'":"&#39;"
+  })[c]);
+}
+
+function showNotice(message,type){
+  const el=document.getElementById("notice");
+  el.textContent=message;
+  el.className="notice show "+type;
+  setTimeout(()=>el.classList.remove("show"),4000);
+}
+
+// =====================================
+// 12. STARTUP
+// =====================================
+
+if(!configured){
+  showAuth();
+  authMessage(
+    "Setup required: Add your Supabase Project URL and Publishable Key in the HTML configuration.",
+    "error"
+  );
+} else {
+  db.auth.getSession().then(({data,error})=>{
+    if(error){
+      showAuth();
+      authMessage(error.message,"error");
+    } else if(!data.session){
+      showAuth();
+    }
+  });
+}
+</script>
+
+</body>
+</html>
