@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,30 +19,28 @@
   --muted:#839087;
   --border:#e7eae4;
   --red:#c94c4c;
-  --orange:#c58b3d;
-  --blue:#527caa;
   --shadow:0 5px 20px rgba(20,50,40,.06);
 }
-* {box-sizing:border-box;margin:0;padding:0}
-body {
+*{box-sizing:border-box;margin:0;padding:0}
+body{
   font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:var(--cream);
   color:var(--text);
   min-height:100vh;
 }
-button,input,select,textarea {font:inherit}
-button {cursor:pointer}
-.topbar {
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.topbar{
   background:var(--green);
   color:white;
-  padding:18px 5%;
+  padding:16px 5%;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:15px;
+  gap:12px;
 }
-.brand {display:flex;align-items:center;gap:12px}
-.brand-icon {
+.brand{display:flex;align-items:center;gap:12px}
+.brand-icon{
   background:var(--gold);
   color:var(--green);
   width:42px;height:42px;
@@ -49,197 +48,219 @@ button {cursor:pointer}
   display:grid;place-items:center;
   font-size:21px;font-weight:800;
 }
-.brand h1 {font-size:19px;letter-spacing:.5px}
-.brand p {font-size:11px;color:#c5d6ce;margin-top:3px}
-.top-right {display:flex;align-items:center;gap:12px}
-.user-label {font-size:12px;color:#d3dfd8}
-.btn {
+.brand h1{font-size:18px;letter-spacing:.5px}
+.brand p{font-size:11px;color:#c5d6ce;margin-top:3px}
+.top-right{display:flex;align-items:center;gap:12px}
+.user-label{font-size:12px;color:#d3dfd8}
+.btn{
   border:0;border-radius:9px;
-  padding:11px 16px;font-weight:600;
-  transition:.2s;
+  padding:10px 15px;font-weight:650;
 }
-.btn-primary {background:var(--green);color:white}
-.btn-primary:hover {background:var(--green2)}
-.btn-gold {background:var(--gold);color:var(--green)}
-.btn-outline {
-  background:white;border:1px solid var(--border);
+.primary{background:var(--green);color:white}
+.gold{background:var(--gold);color:var(--green)}
+.outline{
+  background:white;
+  border:1px solid var(--border);
   color:var(--text);
 }
-.btn-small {padding:7px 10px;font-size:12px}
-.btn-danger {background:#fff0ed;color:#bd4848}
-.container {max-width:1100px;margin:32px auto;padding:0 20px}
-.welcome {
+.danger{background:#fff0ed;color:#bd4848}
+.small{padding:7px 10px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.container{max-width:1100px;margin:28px auto;padding:0 18px}
+.welcome{
   display:flex;justify-content:space-between;
-  align-items:center;gap:15px;margin-bottom:24px;
+  align-items:center;gap:14px;margin-bottom:22px;
 }
-.welcome h2 {font-size:25px;color:var(--green)}
-.welcome p {font-size:13px;color:var(--muted);margin-top:5px}
-.stats {
+.welcome h2{font-size:24px;color:var(--green)}
+.welcome p{font-size:13px;color:var(--muted);margin-top:5px}
+.stats{
   display:grid;grid-template-columns:repeat(3,1fr);
-  gap:15px;margin-bottom:25px;
+  gap:14px;margin-bottom:22px;
 }
-.stat {
-  background:white;padding:20px;border-radius:14px;
-  box-shadow:var(--shadow);
-  border:1px solid var(--border);
+.stat{
+  background:white;padding:18px;border-radius:14px;
+  box-shadow:var(--shadow);border:1px solid var(--border);
 }
-.stat small {color:var(--muted);font-size:12px}
-.stat h3 {font-size:28px;color:var(--green);margin-top:8px}
-.stat-icon {font-size:20px}
-.layout {
+.stat small{color:var(--muted);font-size:12px}
+.stat h3{font-size:27px;color:var(--green);margin-top:7px}
+.layout{
   display:grid;grid-template-columns:220px 1fr;
-  gap:20px;align-items:start;
+  gap:18px;align-items:start;
 }
-.sidebar {
+.sidebar,.main{
   background:white;border:1px solid var(--border);
-  border-radius:15px;padding:12px;
-  position:sticky;top:15px;
+  border-radius:15px;
 }
-.nav-btn {
+.sidebar{padding:11px;position:sticky;top:15px}
+.nav-btn{
   width:100%;display:flex;align-items:center;
-  gap:12px;padding:14px 12px;
+  gap:10px;padding:13px 11px;
   border:0;background:white;color:#647269;
   border-radius:9px;text-align:left;
-  font-weight:600;font-size:13px;margin-bottom:5px;
+  font-weight:650;font-size:13px;margin-bottom:4px;
 }
-.nav-btn.active {background:var(--green);color:white}
-.nav-btn span {font-size:18px}
-.main {
-  background:white;border:1px solid var(--border);
-  border-radius:15px;padding:23px;
-  min-width:0;
+.nav-btn.active{background:var(--green);color:white}
+.nav-btn span{font-size:18px}
+.main{padding:22px;min-width:0}
+.main-header{margin-bottom:18px}
+.main-header h2{font-size:19px;color:var(--green)}
+.main-header p{font-size:12px;color:var(--muted);margin-top:5px}
+.toolbar{
+  display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;margin-bottom:17px;
 }
-.main-header {
-  display:flex;justify-content:space-between;
-  align-items:center;gap:12px;margin-bottom:20px;
-}
-.main-header h2 {font-size:19px;color:var(--green)}
-.main-header p {font-size:12px;color:var(--muted);margin-top:5px}
-.toolbar {
-  display:flex;justify-content:space-between;
-  align-items:center;gap:12px;
-  flex-wrap:wrap;margin-bottom:18px;
-}
-.filters {display:flex;gap:7px;flex-wrap:wrap}
-.filter {
-  padding:8px 13px;border-radius:30px;
-  border:1px solid var(--border);background:white;
-  color:#718077;font-size:11px;font-weight:600;
-}
-.filter.active {background:var(--green);color:white;border-color:var(--green)}
-.job-list {display:flex;flex-direction:column;gap:12px}
-.job {
+.filters{display:flex;gap:7px;flex-wrap:wrap}
+.filter{
+  padding:8px 12px;border-radius:30px;
   border:1px solid var(--border);
-  border-radius:12px;padding:16px;
+  background:white;color:#718077;
+  font-size:11px;font-weight:650;
+}
+.filter.active{
+  background:var(--green);color:white;
+  border-color:var(--green);
+}
+.job-list{display:flex;flex-direction:column;gap:11px}
+.job{
+  border:1px solid var(--border);
+  border-radius:12px;padding:15px;
   display:flex;justify-content:space-between;
   align-items:center;gap:12px;
 }
-.job:hover {border-color:#bdcfc4}
-.job h3 {font-size:14px;color:var(--text);margin:9px 0}
-.job-meta {font-size:11px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
-.job-actions {display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-.badge {
+.job h3{font-size:14px;margin:9px 0}
+.job-meta{
+  font-size:11px;color:var(--muted);
+  display:flex;gap:12px;flex-wrap:wrap;
+}
+.job-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.badge{
   display:inline-block;padding:5px 9px;
   border-radius:20px;font-size:10px;font-weight:700;
 }
-.urgent {background:#ffeded;color:#c74d4d}
-.routine {background:#f0f1ed;color:#718077}
-.pending {background:#fff4df;color:#aa792a}
-.progress {background:#eaf1fb;color:#4e77a5}
-.completed {background:#e5f5eb;color:#328254}
-.handed {background:#eeeafa;color:#7761a9}
-.ack {background:#e5f5eb;color:#328254}
-.empty {
-  text-align:center;padding:45px 15px;
-  color:var(--muted);
-}
-.empty div {font-size:35px;margin-bottom:12px}
-.empty p {font-size:12px;margin-top:6px}
-.form-panel {
+.urgent{background:#ffeded;color:#c74d4d}
+.routine{background:#f0f1ed;color:#718077}
+.pending{background:#fff4df;color:#aa792a}
+.progress{background:#eaf1fb;color:#4e77a5}
+.completed{background:#e5f5eb;color:#328254}
+.handed{background:#eeeafa;color:#7761a9}
+.ack{background:#e5f5eb;color:#328254}
+.empty{text-align:center;padding:42px 14px;color:var(--muted)}
+.empty div{font-size:32px;margin-bottom:10px}
+.empty p{font-size:12px;margin-top:6px}
+.form-panel{
   display:none;background:#f9faf7;
   border:1px solid var(--border);
-  border-radius:12px;padding:20px;margin-bottom:20px;
+  border-radius:12px;padding:18px;margin-bottom:18px;
 }
-.form-panel.show {display:block}
-.form-panel h3 {margin-bottom:16px;color:var(--green);font-size:16px}
-.form-grid {display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.field {display:flex;flex-direction:column;gap:7px}
-.field.full {grid-column:1/-1}
-.field label {font-size:11px;font-weight:700;color:#647269}
-.field input,.field select,.field textarea {
+.form-panel.show{display:block}
+.form-panel h3{margin-bottom:14px;color:var(--green);font-size:16px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:11px;font-weight:700;color:#647269}
+.field input,.field select,.field textarea{
   border:1px solid var(--border);
-  padding:12px;border-radius:8px;
+  padding:11px;border-radius:8px;
   background:white;outline:none;width:100%;
   font-size:13px;color:var(--text);
 }
-.field input:focus,.field select:focus,.field textarea:focus {
-  border-color:var(--green);
+.form-actions{display:flex;gap:8px;margin-top:14px}
+.notice{
+  padding:11px;border-radius:8px;
+  margin-bottom:14px;font-size:12px;display:none;
 }
-.form-actions {display:flex;gap:8px;margin-top:16px}
-.notice {
-  padding:12px;border-radius:8px;
-  margin-bottom:15px;font-size:12px;display:none;
+.notice.show{display:block}
+.notice.error{background:#fff0ed;color:#b94d4d}
+.notice.success{background:#e7f5eb;color:#28774a}
+.handover-header{
+  padding:16px;background:#f2f5ef;
+  border-radius:11px;margin-bottom:16px;
 }
-.notice.show {display:block}
-.notice.error {background:#fff0ed;color:#b94d4d}
-.notice.success {background:#e7f5eb;color:#28774a}
-.handover-header {
-  padding:17px;background:#f2f5ef;
-  border-radius:11px;margin-bottom:18px;
+.handover-header h3{color:var(--green);font-size:16px}
+.handover-header p{font-size:11px;color:var(--muted);margin-top:5px}
+.auth-wrap,.status-wrap{
+  max-width:420px;margin:65px auto;padding:18px;
 }
-.handover-header h3 {color:var(--green);font-size:16px}
-.handover-header p {font-size:11px;color:var(--muted);margin-top:5px}
-.auth-wrap {
-  max-width:410px;margin:70px auto;padding:20px;
+.auth-card,.status-card{
+  background:white;padding:28px;
+  border-radius:17px;border:1px solid var(--border);
+  box-shadow:var(--shadow);
 }
-.auth-card {
-  background:white;padding:30px;border-radius:18px;
-  border:1px solid var(--border);box-shadow:var(--shadow);
+.auth-card h2,.status-card h2{
+  color:var(--green);margin-bottom:7px;
 }
-.auth-card h2 {color:var(--green);margin-bottom:7px}
-.auth-card p {font-size:12px;color:var(--muted);margin-bottom:20px}
-.auth-card .field {margin-bottom:14px}
-.auth-card .btn {width:100%;margin-top:8px}
-.auth-switch {text-align:center;font-size:12px;margin-top:18px}
-.auth-switch a {color:var(--green);font-weight:700;cursor:pointer}
-.footer {
+.auth-card>p,.status-card p{
+  font-size:12px;color:var(--muted);
+  margin-bottom:18px;line-height:1.6;
+}
+.auth-card .field{margin-bottom:13px}
+.auth-card>.btn{width:100%;margin-top:5px}
+.auth-switch{text-align:center;font-size:12px;margin-top:17px}
+.auth-switch a{color:var(--green);font-weight:700;cursor:pointer}
+.status-card{text-align:center}
+.status-card p{font-size:13px}
+.status-icon{font-size:35px;margin-bottom:10px}
+.approval-card{
+  border:1px solid var(--border);
+  border-radius:12px;padding:15px;margin-bottom:11px;
+  display:flex;justify-content:space-between;
+  align-items:center;gap:12px;
+}
+.approval-info{min-width:0}
+.approval-info strong{
+  display:block;color:var(--green);
+  font-size:14px;overflow-wrap:anywhere;
+}
+.approval-info small{
+  display:block;color:var(--muted);
+  font-size:11px;margin-top:5px;overflow-wrap:anywhere;
+}
+.approval-actions{display:flex;gap:7px;flex-wrap:wrap}
+.footer{
   text-align:center;color:var(--muted);
-  font-size:10px;padding:30px 10px;
+  font-size:10px;padding:28px 10px;
 }
-.hidden {display:none!important}
-.mobile-nav {display:none}
+.hidden{display:none!important}
+.mobile-nav{display:none}
 
-@media(max-width:700px) {
-  .topbar {padding:14px 17px}
-  .brand h1 {font-size:16px}
-  .user-label {display:none}
-  .container {padding:0 13px;margin:22px auto}
-  .welcome h2 {font-size:21px}
-  .stats {gap:8px}
-  .stat {padding:13px}
-  .stat h3 {font-size:23px}
-  .stat small {font-size:10px}
-  .layout {display:block}
-  .sidebar {display:none}
-  .main {padding:16px 12px;margin-bottom:80px}
-  .job {align-items:flex-start;flex-direction:column}
-  .job-actions {width:100%}
-  .job-actions button {flex:1}
-  .form-grid {grid-template-columns:1fr}
-  .field.full {grid-column:auto}
-  .mobile-nav {
-    display:flex;position:fixed;bottom:0;left:0;right:0;
+@media(max-width:700px){
+  .topbar{padding:13px 15px}
+  .brand h1{font-size:16px}
+  .user-label{display:none}
+  .container{padding:0 12px;margin:20px auto}
+  .welcome h2{font-size:21px}
+  .stats{gap:7px}
+  .stat{padding:12px}
+  .stat h3{font-size:22px}
+  .stat small{font-size:10px}
+  .layout{display:block}
+  .sidebar{display:none}
+  .main{padding:15px 11px;margin-bottom:78px}
+  .job{align-items:flex-start;flex-direction:column}
+  .job-actions{width:100%}
+  .job-actions button,.job-actions select{flex:1}
+  .form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .mobile-nav{
+    display:flex;position:fixed;
+    bottom:0;left:0;right:0;
     background:white;border-top:1px solid var(--border);
-    justify-content:space-around;padding:10px 3px;
-    z-index:10;
+    justify-content:space-around;padding:7px 2px;
+    z-index:10;overflow-x:auto;
   }
-  .mobile-nav button {
+  .mobile-nav button{
     border:0;background:white;color:#718077;
-    display:flex;flex-direction:column;align-items:center;
-    gap:4px;font-size:10px;padding:5px;
+    display:flex;flex-direction:column;
+    align-items:center;gap:3px;
+    font-size:9px;padding:5px;min-width:57px;
   }
-  .mobile-nav button.active {color:var(--green);font-weight:800}
-  .mobile-nav span {font-size:19px}
+  .mobile-nav button.active{
+    color:var(--green);font-weight:800;
+  }
+  .mobile-nav span{font-size:18px}
+  .approval-card{align-items:flex-start;flex-direction:column}
+  .approval-actions{width:100%}
+  .approval-actions button{flex:1}
 }
 </style>
 </head>
@@ -256,28 +277,32 @@ button {cursor:pointer}
   </div>
   <div class="top-right">
     <span class="user-label" id="userLabel">Welcome, Doctor</span>
-    <button class="btn btn-gold btn-small hidden" id="logoutBtn" onclick="logout()">Logout</button>
+    <button class="btn gold small hidden" id="logoutBtn" onclick="logout()">Logout</button>
   </div>
 </header>
 
+<!-- AUTHENTICATION -->
 <div id="authScreen" class="auth-wrap">
   <div class="auth-card">
     <h2 id="authTitle">Welcome Doctor</h2>
     <p id="authDesc">Sign in to access your HO Companion workspace.</p>
     <div id="authNotice" class="notice"></div>
+
     <div class="field">
       <label>Email address</label>
-      <input type="email" id="email" placeholder="doctor@email.com">
+      <input type="email" id="email" placeholder="doctor@email.com" autocomplete="email">
     </div>
     <div class="field">
       <label>Password</label>
-      <input type="password" id="password" placeholder="Minimum 6 characters">
+      <input type="password" id="password" placeholder="Minimum 6 characters" autocomplete="current-password">
     </div>
     <div class="field hidden" id="teamField">
       <label>Team code</label>
-      <input id="teamCode" placeholder="e.g. MEDICAL-ONCALL">
+      <input id="teamCode" placeholder="e.g. MEDICAL">
     </div>
-    <button class="btn btn-primary" id="authButton" onclick="authenticate()">Sign In</button>
+
+    <button class="btn primary" id="authButton" onclick="authenticate()">Sign In</button>
+
     <div class="auth-switch">
       <span id="switchText">New user?</span>
       <a onclick="toggleAuth()" id="switchLink">Create account</a>
@@ -285,6 +310,17 @@ button {cursor:pointer}
   </div>
 </div>
 
+<!-- PENDING / REJECTED SCREEN -->
+<div id="statusScreen" class="status-wrap hidden">
+  <div class="status-card">
+    <div class="status-icon" id="statusIcon">⏳</div>
+    <h2 id="statusTitle">Awaiting approval</h2>
+    <p id="statusMessage"></p>
+    <button class="btn primary" onclick="logout()">Sign Out</button>
+  </div>
+</div>
+
+<!-- MAIN APPLICATION -->
 <div id="appScreen" class="hidden">
 <main class="container">
 
@@ -293,10 +329,10 @@ button {cursor:pointer}
       <h2>Good day, Doctor.</h2>
       <p>Manage your on-call tasks efficiently.</p>
     </div>
-    <button class="btn btn-primary" onclick="openForm()">+ Add Job</button>
+    <button class="btn primary" id="addJobBtn" onclick="openForm()">+ Add Job</button>
   </section>
 
-  <section class="stats">
+  <section class="stats" id="jobStats">
     <div class="stat">
       <small>📋 Total Jobs</small>
       <h3 id="totalCount">0</h3>
@@ -314,13 +350,16 @@ button {cursor:pointer}
   <section class="layout">
     <aside class="sidebar">
       <button class="nav-btn active" data-tab="personal" onclick="switchTab('personal')">
-        <span>👤</span> Personal Jobs
+        <span>👤</span>Personal Jobs
       </button>
       <button class="nav-btn" data-tab="shared" onclick="switchTab('shared')">
-        <span>👥</span> Shared Team
+        <span>👥</span>Shared Team
       </button>
       <button class="nav-btn" data-tab="passover" onclick="switchTab('passover')">
-        <span>📋</span> Passover Board
+        <span>📋</span>Passover Board
+      </button>
+      <button class="nav-btn hidden" id="adminSideBtn" data-tab="admin" onclick="switchTab('admin')">
+        <span>🛡️</span>Admin Approval
       </button>
     </aside>
 
@@ -334,6 +373,7 @@ button {cursor:pointer}
 
       <div id="notice" class="notice"></div>
 
+      <!-- ADD JOB FORM -->
       <div class="form-panel" id="jobForm">
         <h3>Add New Job</h3>
         <div class="form-grid">
@@ -369,11 +409,12 @@ button {cursor:pointer}
           </div>
         </div>
         <div class="form-actions">
-          <button class="btn btn-primary" onclick="saveJob()">Save Job</button>
-          <button class="btn btn-outline" onclick="closeForm()">Cancel</button>
+          <button class="btn primary" onclick="saveJob()">Save Job</button>
+          <button class="btn outline" onclick="closeForm()">Cancel</button>
         </div>
       </div>
 
+      <!-- JOB FILTERS -->
       <div class="toolbar" id="filterToolbar">
         <div class="filters">
           <button class="filter active" onclick="setFilter('All',this)">All</button>
@@ -389,6 +430,19 @@ button {cursor:pointer}
       </div>
 
       <div id="jobList" class="job-list"></div>
+
+      <!-- ADMIN APPROVAL -->
+      <div id="adminPanel" class="hidden">
+        <div class="toolbar">
+          <p style="font-size:12px;color:var(--muted)">
+            Review registrations before granting workspace access.
+          </p>
+          <button class="btn outline small" onclick="loadPendingUsers()">↻ Refresh</button>
+        </div>
+        <div id="adminNotice" class="notice"></div>
+        <div id="pendingUsersList"></div>
+      </div>
+
     </section>
   </section>
 
@@ -409,171 +463,232 @@ button {cursor:pointer}
   <button data-tab="passover" onclick="switchTab('passover')">
     <span>📋</span>Passover
   </button>
+  <button class="hidden" id="adminMobileBtn" data-tab="admin" onclick="switchTab('admin')">
+    <span>🛡️</span>Admin
+  </button>
 </nav>
 </div>
 
 <script>
-// =====================================
-// 1. SUPABASE CONFIGURATION
-// =====================================
-
+// ========================================
+// SUPABASE CONFIGURATION
+// ========================================
 const SUPABASE_URL = "https://eazmwbuswkityjdfwgsq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_wfvccHh9doCtdvplj0J77g_cwPnBXOp";
+const ADMIN_UID = "e66c3c0f-5956-4e39-94fb-832de2744a42";
 
-let db = null;
-let currentUser = null;
-let currentTeam = "";
-let currentTab = "personal";
-let currentFilter = "All";
-let jobs = [];
-let realtimeChannel = null;
-let signupMode = false;
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-// =====================================
-// 2. INITIALIZATION
-// =====================================
+let currentUser=null;
+let currentTeam="";
+let currentTab="personal";
+let currentFilter="All";
+let jobs=[];
+let realtimeChannel=null;
+let signupMode=false;
+let isAdmin=false;
+let profileLoading=false;
+let signingUp=false;
 
-const configured =
-  SUPABASE_URL.startsWith("https://") &&
-  SUPABASE_KEY.startsWith("sb_publishable_");
-
-if(configured) {
-  db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-  db.auth.onAuthStateChange((event,session)=>{
-    if(session?.user) {
-      currentUser=session.user;
-      setTimeout(()=>loadProfile(),0);
-    } else {
-      showAuth();
-    }
-  });
+function $(id){
+  return document.getElementById(id);
 }
 
-// =====================================
-// 3. AUTHENTICATION
-// =====================================
-
+// ========================================
+// AUTHENTICATION
+// ========================================
 function toggleAuth(){
   signupMode=!signupMode;
-  document.getElementById("authTitle").textContent=
-    signupMode?"Create Doctor Account":"Welcome Doctor";
-  document.getElementById("authDesc").textContent=
-    signupMode?"Register your account and team code.":"Sign in to your workspace.";
-  document.getElementById("authButton").textContent=
-    signupMode?"Create Account":"Sign In";
-  document.getElementById("teamField").classList.toggle("hidden",!signupMode);
-  document.getElementById("switchText").textContent=
-    signupMode?"Already registered?":"New user?";
-  document.getElementById("switchLink").textContent=
-    signupMode?"Sign in":"Create account";
+  $("authTitle").textContent=signupMode?"Create Doctor Account":"Welcome Doctor";
+  $("authDesc").textContent=signupMode
+    ?"Register with your team code. Admin approval is required before access."
+    :"Sign in to your workspace.";
+  $("authButton").textContent=signupMode?"Create Account":"Sign In";
+  $("teamField").classList.toggle("hidden",!signupMode);
+  $("switchText").textContent=signupMode?"Already registered?":"New user?";
+  $("switchLink").textContent=signupMode?"Sign in":"Create account";
+  $("password").autocomplete=signupMode?"new-password":"current-password";
+  $("authNotice").className="notice";
 }
 
 async function authenticate(){
-  if(!db) return alert("Please configure your Supabase URL and Publishable Key first.");
+  const email=$("email").value.trim().toLowerCase();
+  const password=$("password").value;
+  const team=$("teamCode").value.trim().toUpperCase();
 
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
-  const team=document.getElementById("teamCode").value.trim().toUpperCase();
+  if(!email||!password){
+    return authMessage("Enter email and password.","error");
+  }
+  if(password.length<6){
+    return authMessage("Password must contain at least 6 characters.","error");
+  }
+  if(signupMode&&!team){
+    return authMessage("Enter your team code.","error");
+  }
 
-  if(!email||!password) return authMessage("Enter email and password.","error");
-  if(password.length<6) return authMessage("Password must contain at least 6 characters.","error");
-  if(signupMode&&!team) return authMessage("Enter your team code.","error");
+  $("authButton").disabled=true;
 
-  let result;
+  try{
+    if(signupMode){
+      signingUp=true;
 
-  if(signupMode){
-    result=await db.auth.signUp({email,password});
+      const {data,error}=await db.auth.signUp({email,password});
+      if(error)throw error;
 
-    if(result.error) return authMessage(result.error.message,"error");
+      if(!data.user){
+        throw new Error("Registration could not be completed.");
+      }
 
-    if(result.data.user && result.data.session){
-      const {error}=await db.from("ho_profiles").upsert({
-        id:result.data.user.id,
-        team_code:team
+      if(!data.session){
+        signingUp=false;
+        authMessage(
+          "Account created but no active session was returned. Confirm that Supabase Confirm Email is OFF, then contact the admin if needed.",
+          "error"
+        );
+        return;
+      }
+
+      const {error:profileError}=await db.from("ho_profiles").insert({
+        id:data.user.id,
+        email:email,
+        team_code:team,
+        approval_status:"pending"
       });
 
-      if(error) return authMessage(error.message,"error");
+      if(profileError){
+        signingUp=false;
+        await db.auth.signOut();
+        throw new Error(
+          "Account created but profile setup failed: "+profileError.message+
+          ". Contact the administrator."
+        );
+      }
 
-      currentUser=result.data.user;
+      currentUser=data.user;
+      signingUp=false;
+      showStatus("pending");
+
+    }else{
+      const {data,error}=await db.auth.signInWithPassword({email,password});
+      if(error)throw error;
+      currentUser=data.user;
       await loadProfile();
-    } else {
-      authMessage("Account created. Check your email to confirm your account, then sign in. Your team profile may need to be created after confirmation.","success");
     }
-
-  } else {
-    result=await db.auth.signInWithPassword({email,password});
-    if(result.error) return authMessage(result.error.message,"error");
-    currentUser=result.data.user;
-    await loadProfile();
+  }catch(error){
+    authMessage(error.message,"error");
+  }finally{
+    signingUp=false;
+    $("authButton").disabled=false;
   }
 }
 
 function authMessage(message,type){
-  const el=document.getElementById("authNotice");
-  el.textContent=message;
-  el.className="notice show "+type;
+  $("authNotice").textContent=message;
+  $("authNotice").className="notice show "+type;
 }
 
 function showAuth(){
-  document.getElementById("authScreen").classList.remove("hidden");
-  document.getElementById("appScreen").classList.add("hidden");
-  document.getElementById("logoutBtn").classList.add("hidden");
+  $("authScreen").classList.remove("hidden");
+  $("appScreen").classList.add("hidden");
+  $("statusScreen").classList.add("hidden");
+  $("logoutBtn").classList.add("hidden");
   currentUser=null;
+  currentTeam="";
+  isAdmin=false;
+}
+
+function showStatus(status){
+  $("authScreen").classList.add("hidden");
+  $("appScreen").classList.add("hidden");
+  $("statusScreen").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+
+  $("userLabel").textContent=currentUser?.email||"Doctor";
+
+  const pending=status==="pending";
+  $("statusIcon").textContent=pending?"⏳":"⛔";
+  $("statusTitle").textContent=pending
+    ?"Awaiting Admin Approval"
+    :"Registration Not Approved";
+
+  $("statusMessage").textContent=pending
+    ?"Your account has been created. The admin must approve your registration before you can access HO Companion. Please sign in again after approval."
+    :"Your registration has been rejected. Please contact your team administrator.";
 }
 
 function showApp(){
-  document.getElementById("authScreen").classList.add("hidden");
-  document.getElementById("appScreen").classList.remove("hidden");
-  document.getElementById("logoutBtn").classList.remove("hidden");
-  document.getElementById("userLabel").textContent=currentUser.email;
+  $("authScreen").classList.add("hidden");
+  $("statusScreen").classList.add("hidden");
+  $("appScreen").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+  $("userLabel").textContent=currentUser.email;
+
+  $("adminSideBtn").classList.toggle("hidden",!isAdmin);
+  $("adminMobileBtn").classList.toggle("hidden",!isAdmin);
 }
 
 async function logout(){
-  if(realtimeChannel) await db.removeChannel(realtimeChannel);
-  await db.auth.signOut();
+  if(realtimeChannel){
+    await db.removeChannel(realtimeChannel);
+    realtimeChannel=null;
+  }
   jobs=[];
+  await db.auth.signOut();
   showAuth();
 }
 
-// =====================================
-// 4. PROFILE AND TEAM
-// =====================================
-
+// ========================================
+// PROFILE AND APPROVAL CHECK
+// ========================================
 async function loadProfile(){
-  if(!currentUser) return;
+  if(!currentUser||profileLoading||signingUp)return;
 
-  const {data,error}=await db
-    .from("ho_profiles")
-    .select("team_code")
-    .eq("id",currentUser.id)
-    .maybeSingle();
+  profileLoading=true;
+  const userId=currentUser.id;
 
-  if(error){
+  try{
+    const {data,error}=await db
+      .from("ho_profiles")
+      .select("team_code,approval_status,email")
+      .eq("id",userId)
+      .maybeSingle();
+
+    if(error)throw error;
+
+    if(!data){
+      showAuth();
+      authMessage(
+        "No registration profile found. Please contact the administrator.",
+        "error"
+      );
+      return;
+    }
+
+    if(data.approval_status!=="approved"){
+      showStatus(data.approval_status||"pending");
+      return;
+    }
+
+    currentTeam=data.team_code||"";
+    isAdmin=currentUser.id===ADMIN_UID;
+
+    showApp();
+    await loadJobs();
+    subscribeRealtime();
+
+  }catch(error){
+    showAuth();
     authMessage("Unable to load profile: "+error.message,"error");
-    return;
+  }finally{
+    profileLoading=false;
   }
-
-  if(!data){
-    authMessage("No team profile found. Please contact your team administrator to complete your profile setup.","error");
-    return;
-  }
-
-  currentTeam=data.team_code;
-  showApp();
-  await loadJobs();
-  subscribeRealtime();
 }
 
-// =====================================
-// 5. LOAD JOBS
-// =====================================
-
+// ========================================
+// LOAD JOBS AND REALTIME
+// ========================================
 async function loadJobs(){
-  if(!currentUser) return;
+  if(!currentUser)return;
 
   const {data,error}=await db
     .from("ho_jobs")
@@ -590,7 +705,9 @@ async function loadJobs(){
 }
 
 function subscribeRealtime(){
-  if(realtimeChannel) db.removeChannel(realtimeChannel);
+  if(realtimeChannel){
+    db.removeChannel(realtimeChannel);
+  }
 
   realtimeChannel=db
     .channel("ho-jobs-live")
@@ -602,108 +719,124 @@ function subscribeRealtime(){
     .subscribe();
 }
 
-// =====================================
-// 6. CREATE JOB
-// =====================================
-
+// ========================================
+// CREATE JOB
+// ========================================
 function openForm(){
-  document.getElementById("jobForm").classList.add("show");
+  if(currentTab==="admin")return;
+  $("jobForm").classList.add("show");
 }
 
 function closeForm(){
-  document.getElementById("jobForm").classList.remove("show");
+  $("jobForm").classList.remove("show");
 }
 
 async function saveJob(){
-  const task=document.getElementById("task").value.trim();
+  const task=$("task").value.trim();
 
-  if(!task) return showNotice("Please enter a task.","error");
+  if(!task){
+    return showNotice("Please enter a task.","error");
+  }
 
   const payload={
     user_id:currentUser.id,
     team_code:currentTeam,
-    scope:document.getElementById("scope").value,
-    task,
-    ward:document.getElementById("ward").value.trim(),
-    patient_ref:document.getElementById("patientRef").value.trim(),
-    priority:document.getElementById("priority").value,
+    scope:$("scope").value,
+    task:task,
+    ward:$("ward").value.trim(),
+    patient_ref:$("patientRef").value.trim(),
+    priority:$("priority").value,
     status:"Pending",
-    due_time:document.getElementById("dueTime").value || null,
+    due_time:$("dueTime").value||null,
     handover:false,
     acknowledged:false
   };
 
   const {error}=await db.from("ho_jobs").insert(payload);
 
-  if(error) return showNotice(error.message,"error");
+  if(error){
+    return showNotice(error.message,"error");
+  }
 
-  document.getElementById("task").value="";
-  document.getElementById("ward").value="";
-  document.getElementById("patientRef").value="";
-  document.getElementById("dueTime").value="";
+  ["task","ward","patientRef","dueTime"].forEach(id=>{
+    $(id).value="";
+  });
 
   closeForm();
   showNotice("Job successfully added.","success");
   await loadJobs();
 }
 
-// =====================================
-// 7. UPDATE JOB STATUS
-// =====================================
-
+// ========================================
+// UPDATE JOB STATUS
+// ========================================
 async function updateStatus(id,status){
-  const {error}=await db.from("ho_jobs")
+  const {error}=await db
+    .from("ho_jobs")
     .update({status})
     .eq("id",id);
 
-  if(error) return showNotice(error.message,"error");
+  if(error){
+    return showNotice(error.message,"error");
+  }
+
   await loadJobs();
 }
 
-// =====================================
-// 8. PASSOVER
-// =====================================
-
+// ========================================
+// PASSOVER
+// ========================================
 async function passoverJob(id){
-  if(!confirm("Move this outstanding job to Passover Board?")) return;
+  if(!confirm("Move this outstanding job to Passover Board?"))return;
 
-  const {error}=await db.from("ho_jobs")
+  const {error}=await db
+    .from("ho_jobs")
     .update({handover:true,acknowledged:false})
     .eq("id",id);
 
-  if(error) return showNotice(error.message,"error");
+  if(error){
+    return showNotice(error.message,"error");
+  }
 
   showNotice("Job moved to Passover Board.","success");
   await loadJobs();
 }
 
 async function acknowledgeJob(id){
-  const {error}=await db.from("ho_jobs")
+  const {error}=await db
+    .from("ho_jobs")
     .update({acknowledged:true})
     .eq("id",id);
 
-  if(error) return showNotice(error.message,"error");
+  if(error){
+    return showNotice(error.message,"error");
+  }
 
   showNotice("Passover acknowledged.","success");
   await loadJobs();
 }
 
 async function removePassover(id){
-  if(!confirm("Remove this job from Passover Board?")) return;
+  if(!confirm("Remove this job from Passover Board?"))return;
 
-  const {error}=await db.from("ho_jobs")
+  const {error}=await db
+    .from("ho_jobs")
     .update({handover:false,acknowledged:false})
     .eq("id",id);
 
-  if(error) return showNotice(error.message,"error");
+  if(error){
+    return showNotice(error.message,"error");
+  }
+
   await loadJobs();
 }
 
-// =====================================
-// 9. NAVIGATION AND FILTERS
-// =====================================
-
+// ========================================
+// NAVIGATION
+// ========================================
 function switchTab(tab){
+  if(tab==="admin"&&!isAdmin)return;
+
   currentTab=tab;
   currentFilter="All";
 
@@ -714,52 +847,69 @@ function switchTab(tab){
   const titles={
     personal:["Personal Job List","Manage your individual tasks."],
     shared:["Shared Team Job List","Jobs visible to your on-call team."],
-    passover:["Passover Board","Outstanding tasks for the next shift."]
+    passover:["Passover Board","Outstanding tasks for the next shift."],
+    admin:["Admin Approval","Review and manage new registrations."]
   };
 
-  document.getElementById("pageTitle").textContent=titles[tab][0];
-  document.getElementById("pageDesc").textContent=titles[tab][1];
+  $("pageTitle").textContent=titles[tab][0];
+  $("pageDesc").textContent=titles[tab][1];
 
-  document.getElementById("filterToolbar").classList.toggle("hidden",tab==="passover");
-  document.getElementById("passoverIntro").classList.toggle("hidden",tab!=="passover");
+  const admin=tab==="admin";
 
-  document.querySelectorAll(".filter").forEach(b=>{
-    b.classList.toggle("active",b.textContent.trim()==="All");
-  });
+  $("jobStats").classList.toggle("hidden",admin);
+  $("addJobBtn").classList.toggle("hidden",admin);
+  $("filterToolbar").classList.toggle("hidden",admin||tab==="passover");
+  $("passoverIntro").classList.toggle("hidden",admin||tab!=="passover");
+  $("jobList").classList.toggle("hidden",admin);
+  $("adminPanel").classList.toggle("hidden",!admin);
 
   closeForm();
-  render();
+
+  document.querySelectorAll(".filter").forEach(btn=>{
+    btn.classList.toggle("active",btn.textContent.trim()==="All");
+  });
+
+  if(admin){
+    loadPendingUsers();
+  }else{
+    render();
+  }
 }
 
 function setFilter(filter,button){
   currentFilter=filter;
-  document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".filter").forEach(btn=>{
+    btn.classList.remove("active");
+  });
   button.classList.add("active");
   render();
 }
 
-// =====================================
-// 10. RENDER JOBS
-// =====================================
-
+// ========================================
+// RENDER JOB LIST
+// ========================================
 function render(){
-  if(!currentUser) return;
+  if(!currentUser||currentTab==="admin")return;
 
   const personal=jobs.filter(j=>j.user_id===currentUser.id);
-  const shared=jobs.filter(j=>j.scope==="shared"&&j.team_code===currentTeam);
+  const shared=jobs.filter(j=>
+    j.scope==="shared"&&j.team_code===currentTeam
+  );
   const pass=jobs.filter(j=>j.handover);
 
-  document.getElementById("totalCount").textContent=jobs.filter(j=>!j.handover).length;
-  document.getElementById("pendingCount").textContent=jobs.filter(j=>j.status==="Pending"&&!j.handover).length;
-  document.getElementById("passCount").textContent=pass.length;
+  $("totalCount").textContent=jobs.filter(j=>!j.handover).length;
+  $("pendingCount").textContent=jobs.filter(j=>
+    j.status==="Pending"&&!j.handover
+  ).length;
+  $("passCount").textContent=pass.length;
 
   let list=[];
 
   if(currentTab==="personal"){
     list=personal.filter(j=>j.scope==="personal"&&!j.handover);
-  } else if(currentTab==="shared"){
+  }else if(currentTab==="shared"){
     list=shared.filter(j=>!j.handover);
-  } else {
+  }else{
     list=pass;
   }
 
@@ -767,10 +917,8 @@ function render(){
     list=list.filter(j=>j.status===currentFilter);
   }
 
-  const container=document.getElementById("jobList");
-
   if(!list.length){
-    container.innerHTML=`
+    $("jobList").innerHTML=`
       <div class="empty">
         <div>📋</div>
         <strong>No jobs available</strong>
@@ -779,12 +927,34 @@ function render(){
     return;
   }
 
-  container.innerHTML=list.map(j=>{
+  $("jobList").innerHTML=list.map(j=>{
     const priority=j.priority==="Urgent"?"urgent":"routine";
     const statusClass=j.status==="Completed"?"completed":
       j.status==="In Progress"?"progress":"pending";
 
-    const time=j.due_time||"Not specified";
+    const actions=currentTab==="passover"
+      ?`
+        <button class="btn primary small"
+          onclick="acknowledgeJob('${j.id}')"
+          ${j.acknowledged?"disabled":""}>
+          ${j.acknowledged?"Received":"Acknowledge"}
+        </button>
+        <button class="btn outline small"
+          onclick="removePassover('${j.id}')">Remove</button>
+      `
+      :`
+        <select class="btn outline small"
+          aria-label="Update status"
+          onchange="updateStatus('${j.id}',this.value)">
+          <option ${j.status==="Pending"?"selected":""}>Pending</option>
+          <option ${j.status==="In Progress"?"selected":""}>In Progress</option>
+          <option ${j.status==="Completed"?"selected":""}>Completed</option>
+        </select>
+        ${j.status!=="Completed"
+          ?`<button class="btn primary small"
+              onclick="passoverJob('${j.id}')">Passover →</button>`
+          :""}
+      `;
 
     return `
       <article class="job">
@@ -792,8 +962,8 @@ function render(){
           <div style="display:flex;gap:7px;flex-wrap:wrap">
             <span class="badge ${priority}">${escapeHTML(j.priority)}</span>
             <span class="badge ${statusClass}">${escapeHTML(j.status)}</span>
-            ${j.handover?'<span class="badge handed">Passover</span>':''}
-            ${j.acknowledged?'<span class="badge ack">Acknowledged</span>':''}
+            ${j.handover?'<span class="badge handed">Passover</span>':""}
+            ${j.acknowledged?'<span class="badge ack">Acknowledged</span>':""}
           </div>
 
           <h3>${escapeHTML(j.task)}</h3>
@@ -801,78 +971,172 @@ function render(){
           <div class="job-meta">
             <span>📍 ${escapeHTML(j.ward||"No ward")}</span>
             <span>👤 ${escapeHTML(j.patient_ref||"No reference")}</span>
-            <span>🕒 ${escapeHTML(time)}</span>
+            <span>🕒 ${escapeHTML(j.due_time||"Not specified")}</span>
           </div>
+
           <div style="font-size:10px;color:#839087;margin-top:8px">
             ${j.scope==="shared"?"Shared Team Job":"Personal Job"}
           </div>
         </div>
 
-        <div class="job-actions">
-          ${currentTab==="passover"?
-            `<button class="btn btn-primary btn-small"
-             onclick="acknowledgeJob('${j.id}')"
-             ${j.acknowledged?'disabled':''}>
-             ${j.acknowledged?'Received':'Acknowledge'}
-             </button>
-             <button class="btn btn-outline btn-small"
-             onclick="removePassover('${j.id}')">Remove</button>`
-          :
-            `<select class="btn btn-outline btn-small"
-              aria-label="Update status"
-              onchange="updateStatus('${j.id}',this.value)">
-              <option ${j.status==="Pending"?"selected":""}>Pending</option>
-              <option ${j.status==="In Progress"?"selected":""}>In Progress</option>
-              <option ${j.status==="Completed"?"selected":""}>Completed</option>
-             </select>
-             ${j.status!=="Completed"?
-             `<button class="btn btn-primary btn-small"
-             onclick="passoverJob('${j.id}')">Passover →</button>`:""}`
-          }
-        </div>
+        <div class="job-actions">${actions}</div>
       </article>
     `;
   }).join("");
 }
 
-// =====================================
-// 11. UTILITIES
-// =====================================
+// ========================================
+// ADMIN APPROVAL
+// ========================================
+async function loadPendingUsers(){
+  if(!isAdmin||currentUser?.id!==ADMIN_UID)return;
 
+  const list=$("pendingUsersList");
+
+  list.innerHTML=`
+    <div class="empty">
+      <div>⏳</div>
+      <p>Loading registrations...</p>
+    </div>`;
+
+  const {data,error}=await db
+    .from("ho_profiles")
+    .select("id,email,team_code,approval_status")
+    .eq("approval_status","pending")
+    .order("email");
+
+  if(error){
+    adminMessage(
+      "Unable to load registrations: "+error.message,
+      "error"
+    );
+    list.innerHTML="";
+    return;
+  }
+
+  if(!data?.length){
+    list.innerHTML=`
+      <div class="empty">
+        <div>✅</div>
+        <strong>No pending registrations</strong>
+        <p>All registration requests have been reviewed.</p>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML=data.map(user=>`
+    <article class="approval-card">
+      <div class="approval-info">
+        <strong>${escapeHTML(user.email||"Email unavailable")}</strong>
+        <small>Team code: ${escapeHTML(user.team_code||"Not specified")}</small>
+        <small>Registration ID: ${escapeHTML(user.id)}</small>
+        <small><span class="badge pending">Pending approval</span></small>
+      </div>
+
+      <div class="approval-actions">
+        <button class="btn primary small"
+          onclick="reviewUser('${user.id}','approved')">
+          Approve
+        </button>
+        <button class="btn danger small"
+          onclick="reviewUser('${user.id}','rejected')">
+          Reject
+        </button>
+      </div>
+    </article>
+  `).join("");
+}
+
+async function reviewUser(id,status){
+  if(!isAdmin||currentUser?.id!==ADMIN_UID)return;
+
+  const verb=status==="approved"?"approve":"reject";
+
+  if(!confirm(`Are you sure you want to ${verb} this registration?`)){
+    return;
+  }
+
+  const {data,error}=await db
+    .from("ho_profiles")
+    .update({approval_status:status})
+    .eq("id",id)
+    .eq("approval_status","pending")
+    .select("id");
+
+  if(error){
+    return adminMessage(
+      "Unable to update registration: "+error.message,
+      "error"
+    );
+  }
+
+  if(!data?.length){
+    return adminMessage(
+      "No record changed. Refresh and check the registration status.",
+      "error"
+    );
+  }
+
+  adminMessage(
+    `Registration ${status==="approved"?"approved":"rejected"} successfully.`,
+    "success"
+  );
+
+  await loadPendingUsers();
+}
+
+function adminMessage(message,type){
+  $("adminNotice").textContent=message;
+  $("adminNotice").className="notice show "+type;
+}
+
+// ========================================
+// UTILITIES
+// ========================================
 function escapeHTML(value){
   return String(value??"").replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",
-    '"':"&quot;","'":"&#39;"
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
   })[c]);
 }
 
 function showNotice(message,type){
-  const el=document.getElementById("notice");
-  el.textContent=message;
-  el.className="notice show "+type;
-  setTimeout(()=>el.classList.remove("show"),4000);
+  $("notice").textContent=message;
+  $("notice").className="notice show "+type;
+
+  setTimeout(()=>{
+    $("notice").classList.remove("show");
+  },4500);
 }
 
-// =====================================
-// 12. STARTUP
-// =====================================
-
-if(!configured){
-  showAuth();
-  authMessage(
-    "Setup required: Add your Supabase Project URL and Publishable Key in the HTML configuration.",
-    "error"
-  );
-} else {
-  db.auth.getSession().then(({data,error})=>{
-    if(error){
-      showAuth();
-      authMessage(error.message,"error");
-    } else if(!data.session){
-      showAuth();
+// ========================================
+// STARTUP
+// ========================================
+db.auth.onAuthStateChange((event,session)=>{
+  if(session?.user){
+    currentUser=session.user;
+    if(!signingUp && (event==="SIGNED_IN"||event==="INITIAL_SESSION")){
+      setTimeout(()=>loadProfile(),0);
     }
-  });
-}
+  }else{
+    showAuth();
+  }
+});
+
+db.auth.getSession().then(({data,error})=>{
+  if(error){
+    showAuth();
+    authMessage(error.message,"error");
+  }else if(data.session){
+    currentUser=data.session.user;
+    loadProfile();
+  }else{
+    showAuth();
+  }
+});
 </script>
 
 </body>
