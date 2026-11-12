@@ -281,7 +281,6 @@ button{cursor:pointer}
   </div>
 </header>
 
-<!-- AUTHENTICATION -->
 <div id="authScreen" class="auth-wrap">
   <div class="auth-card">
     <h2 id="authTitle">Welcome Doctor</h2>
@@ -310,7 +309,6 @@ button{cursor:pointer}
   </div>
 </div>
 
-<!-- PENDING / REJECTED SCREEN -->
 <div id="statusScreen" class="status-wrap hidden">
   <div class="status-card">
     <div class="status-icon" id="statusIcon">⏳</div>
@@ -320,7 +318,6 @@ button{cursor:pointer}
   </div>
 </div>
 
-<!-- MAIN APPLICATION -->
 <div id="appScreen" class="hidden">
 <main class="container">
 
@@ -373,7 +370,6 @@ button{cursor:pointer}
 
       <div id="notice" class="notice"></div>
 
-      <!-- ADD JOB FORM -->
       <div class="form-panel" id="jobForm">
         <h3>Add New Job</h3>
         <div class="form-grid">
@@ -414,7 +410,6 @@ button{cursor:pointer}
         </div>
       </div>
 
-      <!-- JOB FILTERS -->
       <div class="toolbar" id="filterToolbar">
         <div class="filters">
           <button class="filter active" onclick="setFilter('All',this)">All</button>
@@ -431,7 +426,6 @@ button{cursor:pointer}
 
       <div id="jobList" class="job-list"></div>
 
-      <!-- ADMIN APPROVAL -->
       <div id="adminPanel" class="hidden">
         <div class="toolbar">
           <p style="font-size:12px;color:var(--muted)">
@@ -470,9 +464,6 @@ button{cursor:pointer}
 </div>
 
 <script>
-// ========================================
-// SUPABASE CONFIGURATION
-// ========================================
 const SUPABASE_URL = "https://eazmwbuswkityjdfwgsq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_wfvccHh9doCtdvplj0J77g_cwPnBXOp";
 const ADMIN_UID = "e66c3c0f-5956-4e39-94fb-832de2744a42";
@@ -494,9 +485,7 @@ function $(id){
   return document.getElementById(id);
 }
 
-// ========================================
 // AUTHENTICATION
-// ========================================
 function toggleAuth(){
   signupMode=!signupMode;
   $("authTitle").textContent=signupMode?"Create Doctor Account":"Welcome Doctor";
@@ -637,9 +626,7 @@ async function logout(){
   showAuth();
 }
 
-// ========================================
-// PROFILE AND APPROVAL CHECK
-// ========================================
+// PROFILE AND APPROVAL
 async function loadProfile(){
   if(!currentUser||profileLoading||signingUp)return;
 
@@ -684,9 +671,7 @@ async function loadProfile(){
   }
 }
 
-// ========================================
 // LOAD JOBS AND REALTIME
-// ========================================
 async function loadJobs(){
   if(!currentUser)return;
 
@@ -719,9 +704,7 @@ function subscribeRealtime(){
     .subscribe();
 }
 
-// ========================================
 // CREATE JOB
-// ========================================
 function openForm(){
   if(currentTab==="admin")return;
   $("jobForm").classList.add("show");
@@ -767,9 +750,7 @@ async function saveJob(){
   await loadJobs();
 }
 
-// ========================================
 // UPDATE JOB STATUS
-// ========================================
 async function updateStatus(id,status){
   const {error}=await db
     .from("ho_jobs")
@@ -783,9 +764,53 @@ async function updateStatus(id,status){
   await loadJobs();
 }
 
-// ========================================
+// DELETE JOB
+async function deleteJob(id){
+  const job=jobs.find(j=>j.id===id);
+
+  if(!job){
+    return showNotice("Job not found. Please refresh the page.","error");
+  }
+
+  const isOwner=job.user_id===currentUser.id;
+  const isTeamJob=
+    job.team_code===currentTeam &&
+    (job.scope==="shared"||job.handover===true);
+
+  if(!isOwner&&!isTeamJob){
+    return showNotice("You do not have permission to delete this job.","error");
+  }
+
+  const confirmed=confirm(
+    "Are you sure you want to permanently delete this job?\n\n"+
+    job.task+
+    "\n\nThis action cannot be undone."
+  );
+
+  if(!confirmed)return;
+
+  const {data,error}=await db
+    .from("ho_jobs")
+    .delete()
+    .eq("id",id)
+    .select("id");
+
+  if(error){
+    return showNotice("Unable to delete job: "+error.message,"error");
+  }
+
+  if(!data||data.length===0){
+    return showNotice(
+      "Job was not deleted. You may not have permission to delete it.",
+      "error"
+    );
+  }
+
+  showNotice("Job successfully deleted.","success");
+  await loadJobs();
+}
+
 // PASSOVER
-// ========================================
 async function passoverJob(id){
   if(!confirm("Move this outstanding job to Passover Board?"))return;
 
@@ -828,12 +853,11 @@ async function removePassover(id){
     return showNotice(error.message,"error");
   }
 
+  showNotice("Job removed from Passover Board.","success");
   await loadJobs();
 }
 
-// ========================================
 // NAVIGATION
-// ========================================
 function switchTab(tab){
   if(tab==="admin"&&!isAdmin)return;
 
@@ -885,9 +909,7 @@ function setFilter(filter,button){
   render();
 }
 
-// ========================================
 // RENDER JOB LIST
-// ========================================
 function render(){
   if(!currentUser||currentTab==="admin")return;
 
@@ -895,7 +917,9 @@ function render(){
   const shared=jobs.filter(j=>
     j.scope==="shared"&&j.team_code===currentTeam
   );
-  const pass=jobs.filter(j=>j.handover);
+  const pass=jobs.filter(j=>
+    j.handover&&j.team_code===currentTeam
+  );
 
   $("totalCount").textContent=jobs.filter(j=>!j.handover).length;
   $("pendingCount").textContent=jobs.filter(j=>
@@ -932,6 +956,13 @@ function render(){
     const statusClass=j.status==="Completed"?"completed":
       j.status==="In Progress"?"progress":"pending";
 
+    const canDelete=
+      j.user_id===currentUser.id ||
+      (
+        j.team_code===currentTeam &&
+        (j.scope==="shared"||j.handover===true)
+      );
+
     const actions=currentTab==="passover"
       ?`
         <button class="btn primary small"
@@ -941,6 +972,10 @@ function render(){
         </button>
         <button class="btn outline small"
           onclick="removePassover('${j.id}')">Remove</button>
+        ${canDelete?`
+          <button class="btn danger small"
+            onclick="deleteJob('${j.id}')">🗑 Delete</button>
+        `:""}
       `
       :`
         <select class="btn outline small"
@@ -954,6 +989,10 @@ function render(){
           ?`<button class="btn primary small"
               onclick="passoverJob('${j.id}')">Passover →</button>`
           :""}
+        ${canDelete?`
+          <button class="btn danger small"
+            onclick="deleteJob('${j.id}')">🗑 Delete</button>
+        `:""}
       `;
 
     return `
@@ -985,9 +1024,7 @@ function render(){
   }).join("");
 }
 
-// ========================================
 // ADMIN APPROVAL
-// ========================================
 async function loadPendingUsers(){
   if(!isAdmin||currentUser?.id!==ADMIN_UID)return;
 
@@ -1090,9 +1127,7 @@ function adminMessage(message,type){
   $("adminNotice").className="notice show "+type;
 }
 
-// ========================================
 // UTILITIES
-// ========================================
 function escapeHTML(value){
   return String(value??"").replace(/[&<>"']/g,c=>({
     "&":"&amp;",
@@ -1112,9 +1147,7 @@ function showNotice(message,type){
   },4500);
 }
 
-// ========================================
 // STARTUP
-// ========================================
 db.auth.onAuthStateChange((event,session)=>{
   if(session?.user){
     currentUser=session.user;
